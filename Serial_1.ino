@@ -87,18 +87,18 @@ void loop()
   if (Serial.available() > 0) {//如果串口有消息 
 	   if(Serial.read()=='O') P1OUT|=BIT6;//校验信号
 	   Serial.println('Y');//返回信号给手机端
-	   Motor_Come();
-	   delay(100);
-	   Open();
-	   P1OUT|=BIT6;
-	   delay(400);
-	   Timer_A1_2_open();
-	   delay(100);
-	   Timer_A1_2_close();
-	   delay(4500);
-	   Close();
-	   delay(100);
-	   Motor_Back();
+	   Motor_Come();		//正转电机，开锁装置到位
+	   delay(100);			//舵机反应有一定延时，延时100ms等待开锁装置完全到位
+	   Open();				//舵机正转，开锁
+	   P1OUT|=BIT6;			//持续高电平，使舵机保持不动
+	   delay(400);			//延时一段时间，使提示音更明显
+	   Timer_A1_2_open();	//打开扬声器
+	   delay(100);			//100ms的提示音
+	   Timer_A1_2_close();	//关闭扬声器
+	   delay(4500);			//延时4.5s，加上之前的总共5s，给用户足够时间进门
+	   Close();				//舵机反转，关锁
+	   delay(100);			//延时100ms，等待舵机完全复位
+	   Motor_Back();		//电机反转，整个装置完全复位
 
   }
 }
